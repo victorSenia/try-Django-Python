@@ -1,0 +1,53 @@
+{% load  my_filter %}
+<form action="" method="post">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            {% for f in form.0 %}
+                {% if f.is_hidden %}
+                    <th class="hidden"></th>
+                {% else %}
+                    <th class="form-group">{{ f.label }}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for field in form %}
+            <tr>
+                {% for f in field %}
+                    {% if f.is_hidden %}
+                        <td class="hidden"> {{ f }}</td>
+                    {% else %}
+                        <td class="form-group">
+                            {{ f|add_class:"form-control" }}
+                            {% if f.errors %}
+                                <p class="help-block">{{ f.errors }}</p>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% with field.errors|contain_key:"__all__"  as error %}
+                {% if error %}
+                    <tr>
+                        <td>
+                            <p class="help-block">{{ error }}</p>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+        <tr class="form-inline">
+            <td>
+                <button type="reset" class="btn btn-danger">Reset changes of {{ title }}</button>
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary">Save {{ title }}</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% csrf_token %}
+    {{ form.management_form }}
+</form>
