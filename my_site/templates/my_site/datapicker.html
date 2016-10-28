@@ -1,0 +1,31 @@
+<script>
+    picker.forEach(setdatetimepicker);
+    function setdatetimepicker(element) {
+        $(function () {
+            $(element).datetimepicker({
+                format: "YYYY-MM-DD HH:mm:00",
+                keepInvalid: true,
+                minDate: "now",
+                sideBySide: true,
+                daysOfWeekDisabled: [0, 6],
+                enabledHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],
+                useCurrent: false,
+                stepping: 20,
+            });
+        });
+    }
+
+
+{#    $.each(picker, function (index, element) {#}
+{#            $(index).datetimepicker({#}
+{#                format: "YYYY-MM-DD HH:mm:00",#}
+{#                keepInvalid: true,#}
+{#                sideBySide: true,#}
+{#                daysOfWeekDisabled: [0, 6],#}
+{#                enabledHours: [9, 10, 11, 12, 13, 14, 15, 16, 17],#}
+{#                useCurrent: false,#}
+{#                stepping: 20,#}
+{#                defaultDate: element,#}
+{#            });#}
+{#    });#}
+</script>

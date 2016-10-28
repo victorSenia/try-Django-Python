@@ -31,3 +31,8 @@ def contain_key(dic, key):
 @register.filter("get_key")
 def get_key(dic, key):
     return dic.get(key)
+
+
+@register.filter("get_type")
+def get_key(field):
+    return str(type(field))

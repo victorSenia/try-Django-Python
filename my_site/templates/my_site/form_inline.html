@@ -1,5 +1,15 @@
 {% load  my_filter %}
 <form action="" method="post">
+    <script type="text/javascript">
+        var picker = [];
+        function addID(id) {
+            picker.push(id);
+        }
+        {#        var picker = {};#}
+        {#        function addID(id, value) {#}
+        {#            picker[id] = value;#}
+        {#        }#}
+    </script>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -20,7 +30,19 @@
                         <td class="hidden"> {{ f }}</td>
                     {% else %}
                         <td class="form-group">
-                            {{ f|add_class:"form-control" }}
+                            {% if f.field|get_type == "<class 'django.forms.fields.DateTimeField'>" %}
+                                <div class='input-group date' id='picker{{ f.id_for_label }}'>
+                                    {{ f|add_class:"form-control" }}
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                                <script type="text/javascript">
+                                    addID('#picker{{ f.id_for_label }}');
+                                    {#                              addID('#picker{{ f.id_for_label }}', '{{ f.initial|date:"Y-M-d H:i:00" }}');#}
+                                </script>
+                            {% else %}
+                                {{ f|add_class:"form-control" }}
+                            {% endif %}
                             {% if f.errors %}
                                 <p class="help-block">{{ f.errors }}</p>
                             {% endif %}

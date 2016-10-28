@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User as U
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField, inlineformset_factory, modelform_factory
 from django.forms.widgets import PasswordInput, EmailInput, DateTimeInput, TextInput
 
-from my_site.models import User, Property, Meeting, Client
+from my_site.models import User, Property, Meeting, Client, UserProfile
 
 
 class UserForm(ModelForm):
@@ -36,3 +37,17 @@ clientForm = modelform_factory(Client,
                                    'patronymic': TextInput(attrs={'placeholder': 'Patronymic'}),
                                    'phone': TextInput(attrs={'placeholder': 'Phone'}),
                                }, )
+
+
+class UForm(ModelForm):
+    password = CharField(widget=PasswordInput())
+
+    class Meta:
+        model = U
+        fields = ('username', 'email', 'password')
+
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website',)
