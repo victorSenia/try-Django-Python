@@ -27,7 +27,7 @@ class UserForm(ModelForm):
 propertyFormSet = inlineformset_factory(User, Property, exclude=(), extra=2)
 meetingFormSet = inlineformset_factory(Client, Meeting, exclude=(), widgets={
     'date': DateTimeInput(attrs={'placeholder': 'Choose time'}), },
-                                       extra=2)
+                                       extra=2, can_delete=False)
 
 clientForm = modelform_factory(Client,
                                fields="__all__",
@@ -41,10 +41,15 @@ clientForm = modelform_factory(Client,
 
 class UForm(ModelForm):
     password = CharField(widget=PasswordInput())
+    password_verify = CharField(widget=PasswordInput(), label="Verify password")
 
     class Meta:
         model = U
         fields = ('username', 'email', 'password')
+
+    def clean_password_verify(self):
+        if self.cleaned_data['password'] != self.cleaned_data['password_verify']:
+            raise ValidationError("Passwords do not match")
 
 
 class UserProfileForm(ModelForm):

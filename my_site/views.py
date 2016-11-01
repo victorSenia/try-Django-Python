@@ -1,20 +1,22 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.contrib.auth.hashers import make_password
 from django.forms.forms import Form
 from django.http import HttpResponse
-from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
 from my_site.forms import UserForm, propertyFormSet, meetingFormSet, clientForm, UserProfileForm, UForm
-from my_site.models import Client, User
-from my_site.utils import getDictionary
+from my_site.models import Client, User, UserProfile
 
 
 def index(request):
     # users = getDictionary(User.objects.all(), exclude=["password"], rename={"id": "email", "email": "username"})
     # clients = getDictionary(Client.objects.all())
     # return JsonResponse({"users": users, "clients": clients})
+    # clients = getDictionary(UserProfile.objects.all())
+    # meeting = getDictionary(UserProfile.objects.all(), deepth=5)
+    # meeting = getDictionary(Meeting.objects.all(), deepth=5)
+    # return JsonResponse({"meeting": meeting})
     return render(request, 'my_site/views/index.html', {'users': User.objects.all(), 'clients': Client.objects.all(), })
 
 
@@ -42,6 +44,7 @@ def client(request):
     return render(request, 'my_site/views/create.html', {'form': [form, ], "title": "client"})
 
 
+@login_required
 def userInfo(request, id):
     user = get_object_or_404(User, pk=id)
     if request.method == "POST":
@@ -54,6 +57,13 @@ def userInfo(request, id):
     return render(request, 'my_site/views/user.html', {'owner': user, 'form': form})
 
 
+def checkUser(user):
+    # userProfile=UserProfile.objects.get(user=user)
+    return user.username != "aasd"
+
+
+# @login_required
+@user_passes_test(checkUser)
 def clientInfo(request, id):
     client = get_object_or_404(Client, pk=id)
     if request.method == "POST":
@@ -66,6 +76,7 @@ def clientInfo(request, id):
     return render(request, 'my_site/views/client.html', {'client': client, 'form': form})
 
 
+@login_required
 def userDelete(request, id):
     user = get_object_or_404(User, pk=id)
     if request.method == "POST":
@@ -75,6 +86,7 @@ def userDelete(request, id):
     return redirect('my_site:index')
 
 
+@login_required
 def clientDelete(request, id):
     client = get_object_or_404(Client, pk=id)
     if request.method == "POST":
