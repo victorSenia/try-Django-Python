@@ -2,7 +2,7 @@ from django.db.models import ForeignKey
 from django.db.models.fields.related import OneToOneField
 
 
-def getDictionary(object, exclude=[], rename={}, deepth=0):
+def getDictionary(object, exclude=[], rename={}, deepth=1):
     """
     Get dictionary from model
     Args:

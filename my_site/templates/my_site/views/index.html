@@ -27,8 +27,8 @@
                                        href="{% url 'my_site:userInfo' u.id %}">{{ u.id }}</a>
                                 </td>
                             {% endif %}
-                            <td>{{ u.username }}</td>
-                            <td>{{ u.email }}</td>
+                            <td>{{ u.user.username }}</td>
+                            <td>{{ u.user.email }}</td>
                             {% if user.is_authenticated %}
                                 <td>
                                     <form method="post" action="{% url 'my_site:userDelete' u.id %}">
@@ -42,9 +42,9 @@
                     </tbody>
                 </table>
             {% endif %}
-            {% if user.is_authenticated %}
+{#            {% if user.is_authenticated %}#}
                 <a class="btn btn-success" href="{% url 'my_site:user' %}">Add user</a>
-            {% endif %}
+{#            {% endif %}#}
         </div>
         <div class="col-md-6">
             <h3>Clients</h3>
@@ -89,9 +89,9 @@
                     </tbody>
                 </table>
             {% endif %}
-            {% if user.is_authenticated %}
+{#            {% if user.is_authenticated %}#}
                 <a class="btn btn-success" href="{% url 'my_site:client' %}">Add client</a>
-            {% endif %}
+{#            {% endif %}#}
         </div>
     </div>
 {% endblock %}

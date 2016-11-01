@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from my_site.views import index, user, client, userInfo, clientInfo, userDelete, clientDelete, register, user_login, \
+from my_site.views import index, user, client, userInfo, clientInfo, userDelete, clientDelete,  user_login, \
     user_logout
 
 app_name = 'my_site'
@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^client/$', view=client, name="client"),
     url(r'^client/(?P<id>[0-9]+)/$', view=clientInfo, name="clientInfo"),
     url(r'^client/(?P<id>[0-9]+)/delete/$', view=clientDelete, name="clientDelete"),
-    url(r'^register/$', register, name="register"),
+    # url(r'^register/$', register, name="register"),
     url(r'^login/$', user_login, name="login"),
     url(r'^logout/$', user_logout, name="logout"),
 ]

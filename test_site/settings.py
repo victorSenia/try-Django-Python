@@ -125,3 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = "/site/login/"
+
+AUTH_USER_MODEL = "my_site.User"
